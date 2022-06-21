@@ -11,7 +11,7 @@ import java.util.Date;
  */
 public class DsiCU23 {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         /*CREACION DE LOS OBJETOS SIN BASE DE DATOS*/
         TipoRecursoTecnologico a = new TipoRecursoTecnologico("MICROSCOPIO","");
         TipoRecursoTecnologico b = new TipoRecursoTecnologico("BALANZA DE PRECISION","");
@@ -74,24 +74,41 @@ public class DsiCU23 {
         /*Creamos la pantalla*/
         PantallaRegistrarReservaTurnoDeRT pantalla = new PantallaRegistrarReservaTurnoDeRT();
         
-        /*Llamamos al metodo de la primera interfaz*/
+        /*Llamamos al metodo de interfaz*/
         pantalla.habilitarPantalla();
         
         
+        
         /*Creamos al gestor y se le setean los tipos de recursos que conforman su relacion*/
-        GestorRegistrarReservaTurnoDeRT gestor = new GestorRegistrarReservaTurnoDeRT();        
+        GestorRegistrarReservaTurnoDeRT gestor = new GestorRegistrarReservaTurnoDeRT();  
+        /*Esto pasa nomas porq no tenemos base de datos, sino no se inicializarian y se traerian directamente*/
         gestor.setTiposDeRecursosTecnologicos(arrayTipos);
         gestor.setRecursosTecnologicos(rec);
         
         /*Inicia el Caso de Uso*/
+        
+        
+        
+        
+        
+        /*
+        if(cmbTiposDeRecursos == null){
+            System.out.print("No se cargaron los tipos de recursos...");          
+        }else{
+            pantalla.mostrarTiposDeRecursos(pantalla, cmbTiposDeRecursos);
+        
+        
+        }      
+        */
+       
         if(pantalla.getBtnOpcionReservarTurnoDeRT() == 1){
-            String [] cmbTiposDeRecursos = gestor.opcionReservaTurnoDeRT(pantalla.getBtnOpcionReservarTurnoDeRT());
+            ArrayList <String> cmbTiposDeRecursos = gestor.opcionReservaTurnoDeRT(pantalla.getBtnOpcionReservarTurnoDeRT());
             /*Manda a la pantalla los datos necesarios para mostrar los tipos de recursos*/
-            InterfazPrincipal interfaz = new InterfazPrincipal();
+            PantallaRegistrarReservaTurnoDeRT interfaz = new PantallaRegistrarReservaTurnoDeRT();
             
             /*Prueba de que los datos estan aca para poder mandarlos*/
-            for(int i = 0;i<cmbTiposDeRecursos.length;i++){
-                System.out.print(cmbTiposDeRecursos[i]);
+            for(int i = 0;i<cmbTiposDeRecursos.size();i++){
+                System.out.print(cmbTiposDeRecursos.get(i));
                 
                 
             }

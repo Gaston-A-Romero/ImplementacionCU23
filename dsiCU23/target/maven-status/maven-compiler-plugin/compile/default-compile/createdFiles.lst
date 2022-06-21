@@ -1,15 +1,15 @@
 com\yoprogramo\dsicu23\MenuOpciones$2.class
 com\yoprogramo\dsicu23\AsignacionCientificoDelCI.class
-com\yoprogramo\dsicu23\InterfazPrincipal.class
 com\yoprogramo\dsicu23\Turno.class
 com\yoprogramo\dsicu23\RecursoTecnologico.class
 com\yoprogramo\dsicu23\MenuOpciones$1.class
 com\yoprogramo\dsicu23\CambioEstadoTurno.class
+com\yoprogramo\dsicu23\PantallaRegistrarReservaTurnoDeRT1.class
 com\yoprogramo\dsicu23\DsiCU23.class
+com\yoprogramo\dsicu23\PantallaRegistrarReservaTurnoDeRT1$1.class
 com\yoprogramo\dsicu23\Estado.class
 com\yoprogramo\dsicu23\Modelo.class
 com\yoprogramo\dsicu23\CambioEstadoRT.class
-com\yoprogramo\dsicu23\InterfazPrincipal$1.class
 com\yoprogramo\dsicu23\MenuOpciones.class
 com\yoprogramo\dsicu23\PersonalCientifico.class
 com\yoprogramo\dsicu23\PantallaRegistrarReservaTurnoDeRT.class

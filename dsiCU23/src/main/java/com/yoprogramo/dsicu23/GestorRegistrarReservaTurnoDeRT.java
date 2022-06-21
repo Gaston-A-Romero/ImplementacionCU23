@@ -8,7 +8,7 @@ import java.util.Date;
 public class GestorRegistrarReservaTurnoDeRT {
     private int btnOpcionReservarTurnoDeRT;
     private TipoRecursoTecnologico[] tiposDeRecursosTecnologicos;
-    private String[] cmbTiposDeRecursos;
+    private ArrayList <String> cmbTiposDeRecursos;
     private String tipoRecursoSeleccionado;/*Agregar en el diagrama*/
     private ArrayList<RecursoTecnologico> recursosTecnologicos;
     private RecursoTecnologico recursoTecnologicoSeleccionado;
@@ -113,15 +113,17 @@ public class GestorRegistrarReservaTurnoDeRT {
         this.notificacionMail = notificacionMail;
     }
 
-    public String[] getCmbTiposDeRecursos() {
+    public ArrayList<String> getCmbTiposDeRecursos() {
         return cmbTiposDeRecursos;
     }
 
-    public void setCmbTiposDeRecursos(String[] cmbTiposDeRecursos) {
+    public void setCmbTiposDeRecursos(ArrayList<String> cmbTiposDeRecursos) {
         this.cmbTiposDeRecursos = cmbTiposDeRecursos;
     }
+
+    
     /*Metodo que valida que la opcion haya sido la de reservar turno, llama al metodo que busca los tipos de recurso y los devuelve*/
-    public String[] opcionReservaTurnoDeRT(int a) {
+    public ArrayList <String> opcionReservaTurnoDeRT(int a) {
         if(a == 1){
             this.buscarTiposDeRecursos();
             return this.cmbTiposDeRecursos;
@@ -129,12 +131,12 @@ public class GestorRegistrarReservaTurnoDeRT {
         return null;
         
     }
-    /*Metodo que busca los tipos de recursos y los trae*/
+    /*Metodo que busca los tipos de recursos y los trae, si hay mas de 4 tipos puestos entonces hay q cambiar el numero de vector*/
     public void buscarTiposDeRecursos() {
-        String[] a = new String [4];
+        ArrayList<String> a = new ArrayList<>();
         for(int i=0;i<this.tiposDeRecursosTecnologicos.length;i++){           
             
-            a[i] = tiposDeRecursosTecnologicos[i].getNombre();         
+            a.add(i,tiposDeRecursosTecnologicos[i].getNombre());         
         
         }        
         this.setCmbTiposDeRecursos(a);
