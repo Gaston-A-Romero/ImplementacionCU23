@@ -363,9 +363,9 @@ public class PantallaRegistrarReservaTurnoDeRT extends javax.swing.JFrame {
         }   
         }
     }//GEN-LAST:event_comboBoxCentrosActionPerformed
-    /**/
+    /*AL HACER CLICK EN EL BOTON RECUPERA EL SELECCIONADO Y LO SETEA EN LA PANTALLA COMO RECURSO SELECCIONADO*/
     private void seleccionarRTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleccionarRTActionPerformed
-        comboBoxRT.getSelectedItem()
+        comboBoxRT.getSelectedItem();
         this.interfazSeleccionRT.dispose();
     }//GEN-LAST:event_seleccionarRTActionPerformed
     
