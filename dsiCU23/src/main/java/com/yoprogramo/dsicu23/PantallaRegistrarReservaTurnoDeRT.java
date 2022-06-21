@@ -1,6 +1,7 @@
 
 package com.yoprogramo.dsicu23;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -20,12 +21,20 @@ public class PantallaRegistrarReservaTurnoDeRT extends javax.swing.JFrame {
     private String radioBtnNotificacion;
     private boolean btnConfirmarReserva;
     private boolean btnCancelar;
+    private ArrayList <CentroDeInvestigacion> centrosInvestigacion;
+
     
-    
+    public ArrayList<CentroDeInvestigacion> getCentrosInvestigacion() {    
+            return centrosInvestigacion;
+    }
+
     /*Metodos de la pantalla*/
-    
+    public void setCentrosInvestigacion(ArrayList<CentroDeInvestigacion> centrosInvestigacion) {    
+        this.centrosInvestigacion = centrosInvestigacion;
+    }
+
     public int getBtnOpcionReservarTurnoDeRT() {
-            return btnOpcionReservarTurnoDeRT;
+        return btnOpcionReservarTurnoDeRT;
     }
 
     public void setBtnOpcionReservarTurnoDeRT(int btnOpcionReservarTurnoDeRT) {
@@ -98,17 +107,18 @@ public class PantallaRegistrarReservaTurnoDeRT extends javax.swing.JFrame {
         };
         btnOpcionReservar.addActionListener(click);
         do{
-            /*CANTIDAD DE TIEMPO DORMIDO*/
-            Thread.sleep(8000);
+            /*CANTIDAD DE TIEMPO DORMIDO, ESTO SIRVE PARA Q DE TIEMPO PARA ELEGIR LA OPCION Y PASE A LA SIGUIENTE ETAPA*/
+            Thread.sleep(5000);
         }while (btnOpcionReservarTurnoDeRT == 0);
         
           
             
     }
         
-    public String mostrarTiposDeRecursos(PantallaRegistrarReservaTurnoDeRT gui,ArrayList <String> cmb){ 
+    public String mostrarTiposDeRecursos(ArrayList <String> cmb) throws InterruptedException{ 
             /*LA PANTALLA OBTIENE LOS TIPOS DE RECURSOS*/
             this.setCmbTiposDeRecursos(cmb);
+            /*HABILITA LA SEGUNDA INTERFAZ, LE SETEA UN TAMAÑO DE PANTALLA Y LLENA EL COMBOBOX PARA QUE EL USUARIO PUEDA ELEGIR*/
             this.interfazTipoRecurso.setVisible(true);
             interfazTipoRecurso.setBounds(500, 200, 500, 200);
             for(int i = 0; i < cmb.size();i++){
@@ -119,6 +129,7 @@ public class PantallaRegistrarReservaTurnoDeRT extends javax.swing.JFrame {
             ActionListener click = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                /*SI ESTA SELECCIONADO UN ELEMENTO DEL COMBOBOX Y SE HACE CLICK EN EL BOTON BUSCAR ENTONCES ESTE DEVUELVE EL TIPO DE RECURSO SELECCIONADO ADEMAS DE SETEARLO EN LA PANTALLA*/
                 if(comboBoxTiposRecursos.getSelectedItem() != null){
                     tipoRecursoSeleccionado = comboBoxTiposRecursos.getSelectedItem().toString();
                 }
@@ -127,14 +138,13 @@ public class PantallaRegistrarReservaTurnoDeRT extends javax.swing.JFrame {
             };
             btnBuscarXTipo.addActionListener(click);
             
-            /*Se lo paso a la interfaz*/
-            
-            
-            /*ACA DEBERIA TRAER LA VARIABLE QUE SE SELECCIONA AL HACER CLICK EN LA GUI*/
-            String seleccion = "MICROSCOPIO";
-            this.solicitarSeleccionTipoDeRecurso(seleccion);
-            
-            return seleccion;
+            do{
+            /*CANTIDAD DE TIEMPO DORMIDO, ESTO SIRVE PARA Q DE TIEMPO PARA ELEGIR LA OPCION Y PASE A LA SIGUIENTE ETAPA*/
+            Thread.sleep(5000);
+            }while (comboBoxTiposRecursos.getSelectedIndex() == -1);
+            /*Cierro el formulario de tipo*/
+            interfazTipoRecurso.dispose();
+            return this.tipoRecursoSeleccionado;
             
             
         
@@ -149,7 +159,22 @@ public class PantallaRegistrarReservaTurnoDeRT extends javax.swing.JFrame {
             
     }
 
-    public RecursoTecnologico mostrarRTAgrupados(ArrayList<RecursoTecnologico> recursosAll) {
+    public RecursoTecnologico mostrarRTAgrupados(ArrayList<RecursoTecnologico> recursosAll) throws InterruptedException {
+        this.setListaRT(recursosAll);
+        this.interfazSeleccionRT.setVisible(true);
+        interfazSeleccionRT.setBounds(500,500, 500,500);
+        /*AGREGO LOS CENTROS*/
+        for(int i = 0; i < this.centrosInvestigacion.size();i++){
+                comboBoxCentros.addItem(this.centrosInvestigacion.get(i).getNombre());
+        }
+        
+
+        do{
+            /*CANTIDAD DE TIEMPO DORMIDO, ESTO SIRVE PARA Q DE TIEMPO PARA ELEGIR LA OPCION Y PASE A LA SIGUIENTE ETAPA*/
+            Thread.sleep(20000);
+            }while (comboBoxRT.getSelectedIndex() == -1 || comboBoxCentros.getSelectedIndex() == -1 );
+        
+        
         /*crea la gui y devuelve el rt seleccionado, creo q se tendria q agregar como atributo*/
         RecursoTecnologico seleccionado =  recursosAll.get(1);
         return seleccionado;
@@ -174,6 +199,12 @@ public class PantallaRegistrarReservaTurnoDeRT extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         comboBoxTiposRecursos = new javax.swing.JComboBox<>();
         btnBuscarXTipo = new javax.swing.JButton();
+        interfazSeleccionRT = new javax.swing.JFrame();
+        jLabel3 = new javax.swing.JLabel();
+        comboBoxCentros = new javax.swing.JComboBox<>();
+        comboBoxRT = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
+        seleccionarRT = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         btnOpcionReservar = new javax.swing.JButton();
 
@@ -210,6 +241,57 @@ public class PantallaRegistrarReservaTurnoDeRT extends javax.swing.JFrame {
                     .addComponent(comboBoxTiposRecursos, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
                     .addComponent(btnBuscarXTipo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(48, Short.MAX_VALUE))
+        );
+
+        jLabel3.setText("Seleccione el Centro:");
+
+        comboBoxCentros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboBoxCentrosActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Recursos Pertenecientes a ese centro:");
+
+        seleccionarRT.setText("Seleccionar Recurso Tecnologico");
+        seleccionarRT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                seleccionarRTActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout interfazSeleccionRTLayout = new javax.swing.GroupLayout(interfazSeleccionRT.getContentPane());
+        interfazSeleccionRT.getContentPane().setLayout(interfazSeleccionRTLayout);
+        interfazSeleccionRTLayout.setHorizontalGroup(
+            interfazSeleccionRTLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(interfazSeleccionRTLayout.createSequentialGroup()
+                .addGroup(interfazSeleccionRTLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(interfazSeleccionRTLayout.createSequentialGroup()
+                        .addGap(47, 47, 47)
+                        .addGroup(interfazSeleccionRTLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(comboBoxCentros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3)
+                            .addComponent(comboBoxRT, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(interfazSeleccionRTLayout.createSequentialGroup()
+                        .addGap(120, 120, 120)
+                        .addComponent(seleccionarRT)))
+                .addContainerGap(41, Short.MAX_VALUE))
+        );
+        interfazSeleccionRTLayout.setVerticalGroup(
+            interfazSeleccionRTLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(interfazSeleccionRTLayout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(jLabel3)
+                .addGap(18, 18, 18)
+                .addComponent(comboBoxCentros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(comboBoxRT, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
+                .addComponent(seleccionarRT)
+                .addGap(12, 12, 12))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -258,6 +340,34 @@ public class PantallaRegistrarReservaTurnoDeRT extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_clickBtnOpcion
+    /*TRATO DE QUE SI SELECCIONA UN CENTRO VA A BUSCAR LA LISTA DE RECURSOS TECNOLOGICOS Y SI COINCIDE CON EL CENTRO DE ESTE LLENA EL COMBOBOX
+    CAMBIA EL COLOR SEGUN EL NOMBRE DEL ESTADO, falta implementar que no muestre los objetos que estan de baja tecnica o baja definitiva
+    */
+    private void comboBoxCentrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxCentrosActionPerformed
+        if(comboBoxCentros.getSelectedIndex() != -1){
+            for(int i = 0; i < this.listaRT.size();i++){
+                if(comboBoxCentros.getSelectedItem().toString() == listaRT.get(i).getCentro().getNombre()){
+                    comboBoxRT.removeAllItems();
+                    comboBoxRT.addItem(this.listaRT.get(i).toString());
+                    if(this.listaRT.get(i).getCambioEstado().esUltimoCambioEstadoRT() == "Disponible"){
+                        comboBoxRT.setForeground(Color.blue);
+                    }
+                    else{if(this.listaRT.get(i).getCambioEstado().esUltimoCambioEstadoRT() == "En Mantenimiento"){
+                        comboBoxRT.setForeground(Color.green);
+                    
+                    }else{
+                        comboBoxRT.setForeground(Color.gray);
+                    }
+                    }
+                }
+        }   
+        }
+    }//GEN-LAST:event_comboBoxCentrosActionPerformed
+    /**/
+    private void seleccionarRTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleccionarRTActionPerformed
+        comboBoxRT.getSelectedItem()
+        this.interfazSeleccionRT.dispose();
+    }//GEN-LAST:event_seleccionarRTActionPerformed
     
     
   
@@ -279,9 +389,15 @@ public class PantallaRegistrarReservaTurnoDeRT extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscarXTipo;
     private javax.swing.JButton btnOpcionReservar;
+    private javax.swing.JComboBox<String> comboBoxCentros;
+    private javax.swing.JComboBox<String> comboBoxRT;
     private javax.swing.JComboBox<String> comboBoxTiposRecursos;
+    private javax.swing.JFrame interfazSeleccionRT;
     private javax.swing.JFrame interfazTipoRecurso;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JButton seleccionarRT;
     // End of variables declaration//GEN-END:variables
 }

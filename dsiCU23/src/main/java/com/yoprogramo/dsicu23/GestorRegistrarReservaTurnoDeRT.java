@@ -18,6 +18,7 @@ public class GestorRegistrarReservaTurnoDeRT {
     private Turno turnoSeleccionado;
     private boolean esReservado;
     private String notificacionMail;
+    private ArrayList <CentroDeInvestigacion> centrosInvestigacion; /*ARRAY DE CENTRO AGREGADOS PARA PODER CLASIFICARLOS A LOS RECURSOS SEGUN EL CENTRO*/ 
     
     /*Constructor de la clase*/
 
@@ -121,6 +122,15 @@ public class GestorRegistrarReservaTurnoDeRT {
         this.cmbTiposDeRecursos = cmbTiposDeRecursos;
     }
 
+    public ArrayList<CentroDeInvestigacion> getCentrosInvestigacion() {
+        return centrosInvestigacion;
+    }
+
+    public void setCentrosInvestigacion(ArrayList<CentroDeInvestigacion> centrosInvestigacion) {
+        this.centrosInvestigacion = centrosInvestigacion;
+    }
+    
+
     
     /*Metodo que valida que la opcion haya sido la de reservar turno, llama al metodo que busca los tipos de recurso y los devuelve*/
     public ArrayList <String> opcionReservaTurnoDeRT(int a) {
@@ -154,6 +164,10 @@ public class GestorRegistrarReservaTurnoDeRT {
             
             
             
+            
+        }
+        if(tipoS.size() == 0){
+            System.out.print("No hay recursos de tipo: " + tipo);
         }
             
         return tipoS;
@@ -163,17 +177,27 @@ public class GestorRegistrarReservaTurnoDeRT {
     
     /*Desencadena todos los mensajes para obtener atributos de los recursos ya filtrados por tipo de recurso*/
     public ArrayList<RecursoTecnologico> buscarInformacionRecursosTecnologicos(ArrayList<RecursoTecnologico> recursos) {        
-        /*CAMBIARLO POR mostrarRT*/
+        ArrayList <RecursoTecnologico> recursosDatos = new ArrayList <>();
         for(int i = 0; i < recursos.size(); i++){
-           System.out.print(recursos.get(i).mostrarRT());
+           recursosDatos.add(i, recursos.get(i).mostrarRT());
         
         }
-        return recursos;
+        this.setCentrosInvestigacion(this.obtenerCentroInvestigacion(recursos));
+        return recursosDatos;
         
     }
-
-    public void agruparRTPorCI(ArrayList<RecursoTecnologico> recursosAll) {
-        /**/
+    /*Busca los centros que tienen los objetos q se les paso y los guarda en el atributo del gestor*/
+    public ArrayList <CentroDeInvestigacion> obtenerCentroInvestigacion(ArrayList<RecursoTecnologico> rt) {
+        ArrayList <CentroDeInvestigacion> centros = new ArrayList <>();
+        for(int i = 0;i<rt.size();i++){
+            centros.add(rt.get(i).getCentro());
+        }
+        return centros;
+        
+    }
+    /*CON LA DEPENDENCIA ME IMAGINO QUE AL TENER EL NOMBRE DEL CENTRO PODES OBTENER EL ARRAY LIST DE LOS RECURSOS Y LO RECORRES CON EL TIPO PARA QUE SIGAN SIENDO LOS DE ANTES*/
+    public void agruparRTPorCI() {
+        
     }
     /*Busca al usuario y obtiene su legajo, esto no creo q este bien u hay que ver como se implementa lo de la sesion, capaz puede pedir el legajo o algo en la interfaz*/
     public int buscarUsuarioLogueado() {        
@@ -201,6 +225,8 @@ public class GestorRegistrarReservaTurnoDeRT {
     private void buscarEstadoReservado(String ambito) {
         /*Recorrer la clase estado con todos y preguntar si el string ambito es igual a el atributo ambito*/
     }
+
+    
     
         
     

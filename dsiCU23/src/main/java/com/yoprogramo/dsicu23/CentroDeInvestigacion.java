@@ -1,6 +1,7 @@
 
 package com.yoprogramo.dsicu23;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -23,12 +24,14 @@ public class CentroDeInvestigacion {
     private Date fechaBaja;
     private String motivoBaja;
     
-    private RecursoTecnologico[] recursosTecnologicos; /*Referencias a otras clases*/
-    private AsignacionCientificoDelCI[] asignacionCientifico;
+    private ArrayList<RecursoTecnologico> recursosTecnologicos; /*Referencias a otras clases*/
+    private ArrayList<AsignacionCientificoDelCI> asignacionCientifico;
+    
+    
     
     /* Constructor de la clase*/
 
-    public CentroDeInvestigacion(String nombre, String sigla, String direccion, String edificio, String piso, String coordenadas, String telefonosContacto, String correoElectronico, Integer numeroResolucionCreacion, Date fechaResolucionCreacion, String reglamento, String caracteristicasGenerales, Date fechaAlta, Integer tiempoAntelacionReserva, Date fechaBaja, String motivoBaja, RecursoTecnologico[] recursosTecnologicos, AsignacionCientificoDelCI[] asignacionCientifico) {
+    public CentroDeInvestigacion(String nombre, String sigla, String direccion, String edificio, String piso, String coordenadas, String telefonosContacto, String correoElectronico, Integer numeroResolucionCreacion, Date fechaResolucionCreacion, String reglamento, String caracteristicasGenerales, Date fechaAlta, Integer tiempoAntelacionReserva, Date fechaBaja, String motivoBaja, ArrayList<RecursoTecnologico> recursosTecnologicos, ArrayList<AsignacionCientificoDelCI> asignacionCientifico) {
         this.nombre = nombre;
         this.sigla = sigla;
         this.direccion = direccion;
@@ -48,6 +51,10 @@ public class CentroDeInvestigacion {
         this.recursosTecnologicos = recursosTecnologicos;
         this.asignacionCientifico = asignacionCientifico;
     }
+
+    
+
+    
     
    
     
@@ -181,5 +188,24 @@ public class CentroDeInvestigacion {
     public void setMotivoBaja(String motivoBaja) {
         this.motivoBaja = motivoBaja;
     }
+
+    public ArrayList<RecursoTecnologico> getRecursosTecnologicos() {
+        return recursosTecnologicos;
+    }
+
+    public void setRecursosTecnologicos(ArrayList<RecursoTecnologico> recursosTecnologicos) {
+        this.recursosTecnologicos = recursosTecnologicos;
+    }
+
+    public ArrayList<AsignacionCientificoDelCI> getAsignacionCientifico() {
+        return asignacionCientifico;
+    }
+
+    public void setAsignacionCientifico(ArrayList<AsignacionCientificoDelCI> asignacionCientifico) {
+        this.asignacionCientifico = asignacionCientifico;
+    }
+
+    
+    
     
 }

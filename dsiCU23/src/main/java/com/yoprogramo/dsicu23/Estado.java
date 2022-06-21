@@ -61,9 +61,12 @@ public class Estado {
     public void setEsCancelable(Boolean esCancelable) {
         this.esCancelable = esCancelable;
     }
-    
+    /*Si el ambito del estado es recurso tecnologico devuelve un true, caso contrario un false*/
     public Boolean esAmbitoRecursoTecnologico(){
-        return true;/* Tiene que devolver el getter de ambito y si es igual a recurso tecnologico devuelve true*/
+        if(this.getAmbito() == "Recurso Tecnologico"){
+            return true;
+        }
+        return false;
     }
     
 }

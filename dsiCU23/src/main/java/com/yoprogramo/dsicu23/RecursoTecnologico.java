@@ -147,16 +147,21 @@ public class RecursoTecnologico {
         
     }
     /*Este mostrar deberia traer todos los datos de los recursos y guardarlos en el array para que se puedan agrupar y seleccionar, no me queda muy claro que hace*/
-    public RecursoTecnologico mostrarRT() {
+        public RecursoTecnologico mostrarRT() {
+        /*CONVIERTE TODOS LOS DATOS EN STRING PARA PODER MOSTRARLOS, ESTO NO CREO QUE ESTE BIEN*/
+        
         this.getNumeroRT();
-        this.miModeloYMarca();
+        this.getModelo().getNombre(); 
         this.cambioEstado.esUltimoCambioEstadoRT();
-        this.getCentro();
+        this.getCentro().getNombre(); 
+        
+        
         return this;
         
         
     }
-
+    /*Me da problema el tema de obtener los dos datos y devolverlos si estoy devolviendo un recurso tecnologico*/
+    /*
     public ArrayList<String> miModeloYMarca() {
         ArrayList<String> modeloYmarca = new ArrayList<>();
         modeloYmarca.add(this.modelo.getNombre());
@@ -166,8 +171,14 @@ public class RecursoTecnologico {
         
         
     }
+    */
     /*OTRA DEPENDENCIA PARA IMPLEMENTAR pero lo hago sin por ahora*/
     private void conocerCentroDeInvestigacion() {
+        
+    }
+    
+    public String toString(){
+        return this.getNumeroRT() + "-" + this.getModelo().getNombre()+"-"+this.getCambioEstado().esUltimoCambioEstadoRT();
         
     }
 

@@ -26,7 +26,7 @@ public class DsiCU23 {
         arrayTipos[3] = d;
         /*Creando las relaciones del tipo de recurso con un estado */
         Estado bb = new Estado("Disponible","","",true,false);
-        Estado bd = new Estado("Reservado","","",true,false);
+        Estado bd = new Estado("En Mantenimiento","","",true,false);
         Date desde = new Date();
         Date hasta = new Date();
         
@@ -39,10 +39,11 @@ public class DsiCU23 {
         Modelo model = new Modelo("model1",marca);
         Modelo model2 = new Modelo("modelo2",marca2);
         
+        CentroDeInvestigacion centro = new CentroDeInvestigacion("SERN",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
+        CentroDeInvestigacion centro2 = new CentroDeInvestigacion("NASA",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
         
-        
-        RecursoTecnologico aa = new RecursoTecnologico(1,null,null,null,null,null,model,a,ba,null,null);
-        RecursoTecnologico ab = new RecursoTecnologico(2,null,null,null,null,null,model2,a,bc,null,null);
+        RecursoTecnologico aa = new RecursoTecnologico(1,null,null,null,null,null,model,a,ba,null,centro);
+        RecursoTecnologico ab = new RecursoTecnologico(2,null,null,null,null,null,model2,a,bc,null,centro2);
         
         RecursoTecnologico ac = new RecursoTecnologico(3,null,null,null,null,null,model,b,bc,null,null);
         RecursoTecnologico ad = new RecursoTecnologico(4,null,null,null,null,null,null,null,null,null,null);
@@ -71,6 +72,8 @@ public class DsiCU23 {
         
         
         
+        
+        
         /*Creamos la pantalla*/
         PantallaRegistrarReservaTurnoDeRT pantalla = new PantallaRegistrarReservaTurnoDeRT();
         
@@ -86,39 +89,22 @@ public class DsiCU23 {
         gestor.setRecursosTecnologicos(rec);
         
         /*Inicia el Caso de Uso*/
-        
-        
-        
-        
-        
-        /*
-        if(cmbTiposDeRecursos == null){
-            System.out.print("No se cargaron los tipos de recursos...");          
-        }else{
-            pantalla.mostrarTiposDeRecursos(pantalla, cmbTiposDeRecursos);
-        
-        
-        }      
-        */
-       
         if(pantalla.getBtnOpcionReservarTurnoDeRT() == 1){
             ArrayList <String> cmbTiposDeRecursos = gestor.opcionReservaTurnoDeRT(pantalla.getBtnOpcionReservarTurnoDeRT());
             /*Manda a la pantalla los datos necesarios para mostrar los tipos de recursos*/
             PantallaRegistrarReservaTurnoDeRT interfaz = new PantallaRegistrarReservaTurnoDeRT();
             
-            /*Prueba de que los datos estan aca para poder mandarlos*/
-            for(int i = 0;i<cmbTiposDeRecursos.size();i++){
-                System.out.print(cmbTiposDeRecursos.get(i));
-                
-                
-            }
+            
             /*Llama a la pantalla para que muestre una interfaz donde se pueda elegir los tipos de recursos*/
-            String seleccion = pantalla.mostrarTiposDeRecursos(interfaz,cmbTiposDeRecursos);
+            String seleccion = pantalla.mostrarTiposDeRecursos(cmbTiposDeRecursos);
+            
+            /*Comprobacion de que lo que se selecciona en el formulario se devuelve*/
             System.out.print(seleccion);
             /*Mando al gestor para que pueda obtener todos los recursos con el tipo pasado por parametro*/
             /*Aca supongo que deberiamos ver si el estado es baja tecnica o baja definitiva, hay que ver eso
             */
-            ArrayList<RecursoTecnologico> recursos = gestor.buscarRTDeTipoSeleccionado(seleccion);
+            ArrayList<RecursoTecnologico> recursos = gestor.buscarRTDeTipoSeleccionado(seleccion);           
+            
             pantalla.setListaRT(recursos);
             
             /*PRUEBA DE QUE EL FILTRO POR TIPOS ESTA FUNCIONANDO, TRAE EL NUMERO 1 Y 2, PERO EL 3 NO*/
@@ -129,11 +115,20 @@ public class DsiCU23 {
             
             /*Buscar y obtener los datos de los recursos, ACA NO SE SI DEVOLVERIA UN ARRAY DE RECURSOS PORQUE TIENE Q CONTENER EL CENTRO AL QUE PERTENECE */
             ArrayList<RecursoTecnologico> recursosAll = gestor.buscarInformacionRecursosTecnologicos(recursos);
+           /*OBTENIENDO DATOS PARA VER COMO SE PASAN A LA INTERFAZ PARA AGRUPARLOS POR EL CENTRO*/
+            for(int i=0;i<recursosAll.size();i++){
+                System.out.print(recursosAll.get(i).getNumeroRT()+"-" + recursosAll.get(i).getModelo().getNombre()+"-" + recursosAll.get(i).getCentro().getNombre()+"---");
+            
+            }
+            pantalla.setCentrosInvestigacion(gestor.getCentrosInvestigacion());
             /*HAY QUE VER COMO SE IMPLEMENTA LA DEPENDENCIA PARA PODER SABER Q RECURSOS TIENE UN CENTRO, ENTONCES LE MANDAS O UN ARRAY Q TIENE EL CENTRO O LOS CENTROS POR SEPARADOS*/
-            gestor.agruparRTPorCI(recursosAll);
-            /*llama a la pantalla y esta o crea una nueva gui q muestre todos los recursos agrupados y espera a q selecciones una para setearlo como recurso seleccionado*/
+            gestor.agruparRTPorCI();
+            /*llama a la pantalla y esta o crea una nueva gui q muestre todos los recursos agrupados y espera a q selecciones una para setearlo como recurso seleccionado
+            ESTE METODO TERMINA HACIENDO UN MONTON DE PASOS Y MENSAJES DEL DIAGRAMA, NO ESTA AGRUPANDO COMO TAL PERO SI VA A MOSTRAR LOS RECURSOS SEGUN EL CENTRO Q TIENEN,
+            TENDRIAMOS QUE VER SI ES NECESARIO CAMBIAR LOS METODOS PARA Q HAGAN COSAS O QUE HACER
+            */
             pantalla.mostrarRTAgrupados(recursosAll);
-            /*no entiendo lo de agruparlos por colores, donde dice que hay que hacerlo*/
+            
             
             
             int usuario = gestor.buscarUsuarioLogueado();
