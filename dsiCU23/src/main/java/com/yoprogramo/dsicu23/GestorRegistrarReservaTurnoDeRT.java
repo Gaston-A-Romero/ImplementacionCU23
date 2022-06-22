@@ -18,7 +18,7 @@ public class GestorRegistrarReservaTurnoDeRT {
     private Turno turnoSeleccionado;
     private boolean esReservado;
     private String notificacionMail;
-    private ArrayList <CentroDeInvestigacion> centrosInvestigacion; /*ARRAY DE CENTRO AGREGADOS PARA PODER CLASIFICARLOS A LOS RECURSOS SEGUN EL CENTRO*/ 
+      
     
     /*Constructor de la clase*/
 
@@ -122,13 +122,7 @@ public class GestorRegistrarReservaTurnoDeRT {
         this.cmbTiposDeRecursos = cmbTiposDeRecursos;
     }
 
-    public ArrayList<CentroDeInvestigacion> getCentrosInvestigacion() {
-        return centrosInvestigacion;
-    }
-
-    public void setCentrosInvestigacion(ArrayList<CentroDeInvestigacion> centrosInvestigacion) {
-        this.centrosInvestigacion = centrosInvestigacion;
-    }
+    
     
 
     
@@ -154,24 +148,21 @@ public class GestorRegistrarReservaTurnoDeRT {
     }
     /*Busco todos los recursos que coincidan con el tipo y luego valido que sean reservables*/
     public ArrayList<RecursoTecnologico> buscarRTDeTipoSeleccionado(String tipo) {
-        ArrayList<RecursoTecnologico> tipoS = new ArrayList<>();
+        ArrayList<RecursoTecnologico> tipoR = new ArrayList<>();
         for(int i = 0; i<this.recursosTecnologicos.size() ; i++){ 
-                       
-            if(this.recursosTecnologicos.get(i).getTipoRecurso().getNombre().equals(tipo) && this.recursosTecnologicos.get(i).obtenerRTReservables() == true){
-                tipoS.add(i,recursosTecnologicos.get(i));
+                       /*Pregunto si el tipo de recurso es igual al nombre*/
+            if((this.recursosTecnologicos.get(i).getTipoRecurso().getNombre().equals(tipo) && this.recursosTecnologicos.get(i).obtenerRTReservable() == true)){
+                if(this.recursosTecnologicos.get(i).getCambioEstado().esUltimoCambioEstadoRT() != "Baja Tecnica" && this.recursosTecnologicos.get(i).getCambioEstado().esUltimoCambioEstadoRT() != "Baja Definitiva"){
                 
+                    tipoR.add(recursosTecnologicos.get(i));
+                }   
             }
-            
-            
-            
-            
         }
-        if(tipoS.size() == 0){
-            System.out.print("No hay recursos de tipo: " + tipo);
-        }
-            
-        return tipoS;
         
+        if(tipoR.size() == 0){
+            System.out.print("No hay recursos de tipo: " + tipo + " que se puedan reservar.");
+        }            
+        return tipoR;        
     }
 
     
@@ -180,21 +171,13 @@ public class GestorRegistrarReservaTurnoDeRT {
         ArrayList <RecursoTecnologico> recursosDatos = new ArrayList <>();
         for(int i = 0; i < recursos.size(); i++){
            recursosDatos.add(i, recursos.get(i).mostrarRT());
-        
+           
         }
-        this.setCentrosInvestigacion(this.obtenerCentroInvestigacion(recursos));
+        
         return recursosDatos;
         
     }
-    /*Busca los centros que tienen los objetos q se les paso y los guarda en el atributo del gestor*/
-    public ArrayList <CentroDeInvestigacion> obtenerCentroInvestigacion(ArrayList<RecursoTecnologico> rt) {
-        ArrayList <CentroDeInvestigacion> centros = new ArrayList <>();
-        for(int i = 0;i<rt.size();i++){
-            centros.add(rt.get(i).getCentro());
-        }
-        return centros;
-        
-    }
+    
     /*CON LA DEPENDENCIA ME IMAGINO QUE AL TENER EL NOMBRE DEL CENTRO PODES OBTENER EL ARRAY LIST DE LOS RECURSOS Y LO RECORRES CON EL TIPO PARA QUE SIGAN SIENDO LOS DE ANTES*/
     public void agruparRTPorCI() {
         
@@ -225,6 +208,8 @@ public class GestorRegistrarReservaTurnoDeRT {
     private void buscarEstadoReservado(String ambito) {
         /*Recorrer la clase estado con todos y preguntar si el string ambito es igual a el atributo ambito*/
     }
+
+    
 
     
     

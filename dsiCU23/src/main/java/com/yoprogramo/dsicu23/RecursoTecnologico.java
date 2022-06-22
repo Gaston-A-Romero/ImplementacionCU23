@@ -22,9 +22,9 @@ public class RecursoTecnologico {
     
     
     
+    
     /*Constructor*/
-
-    public RecursoTecnologico(Integer numeroRT, Date fechaAlta, String imagenes, Date perioricidadMantenimientoPrev, Integer duracionMantenimientoPrev, String fraccionHorarioTurnos, Modelo modelo, TipoRecursoTecnologico tipoRecurso, CambioEstadoRT cambioEstado, Turno[] turnos, CentroDeInvestigacion centro) {
+    public RecursoTecnologico(Integer numeroRT, Date fechaAlta, String imagenes, Date perioricidadMantenimientoPrev, Integer duracionMantenimientoPrev, String fraccionHorarioTurnos, Modelo modelo, TipoRecursoTecnologico tipoRecurso, CambioEstadoRT cambioEstado, Turno[] turnos, CentroDeInvestigacion centro) {    
         this.numeroRT = numeroRT;
         this.fechaAlta = fechaAlta;
         this.imagenes = imagenes;
@@ -127,6 +127,9 @@ public class RecursoTecnologico {
         this.centro = centro;
     }
     
+
+    
+    
     
     
     
@@ -140,20 +143,20 @@ public class RecursoTecnologico {
         
     }
 
-    public boolean obtenerRTReservables() {
-        boolean R = this.cambioEstado.esReservable();
-        return R;
+    public boolean obtenerRTReservable() {
+        boolean r = this.cambioEstado.esReservable();
+        return r;
         
         
     }
     /*Este mostrar deberia traer todos los datos de los recursos y guardarlos en el array para que se puedan agrupar y seleccionar, no me queda muy claro que hace*/
         public RecursoTecnologico mostrarRT() {
-        /*CONVIERTE TODOS LOS DATOS EN STRING PARA PODER MOSTRARLOS, ESTO NO CREO QUE ESTE BIEN*/
-        
+               
         this.getNumeroRT();
         this.getModelo().getNombre(); 
         this.cambioEstado.esUltimoCambioEstadoRT();
-        this.getCentro().getNombre(); 
+        this.getCentro();
+         
         
         
         return this;
@@ -178,7 +181,7 @@ public class RecursoTecnologico {
     }
     
     public String toString(){
-        return this.getNumeroRT() + "-" + this.getModelo().getNombre()+"-"+this.getCambioEstado().esUltimoCambioEstadoRT();
+        return "Numero: "+this.getNumeroRT() + "-" +"Modelo: "+ this.getModelo().getNombre()+"--"+"Marca: "+ this.getModelo().conocerMarca()+"--"+"Estado: "+this.getCambioEstado().esUltimoCambioEstadoRT();
         
     }
 

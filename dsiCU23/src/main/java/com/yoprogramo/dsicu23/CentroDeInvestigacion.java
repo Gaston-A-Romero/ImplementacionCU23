@@ -204,6 +204,17 @@ public class CentroDeInvestigacion {
     public void setAsignacionCientifico(ArrayList<AsignacionCientificoDelCI> asignacionCientifico) {
         this.asignacionCientifico = asignacionCientifico;
     }
+   public boolean tieneAlMenosUnRecurso(String tipo){
+       for(int i = 0;i<this.recursosTecnologicos.size();i++){
+           if(this.getNombre() == this.recursosTecnologicos.get(i).getCentro().getNombre() && this.recursosTecnologicos.get(i).getTipoRecurso().getNombre() == tipo){
+               return true;
+               
+           }
+           
+       }
+       return false;
+   }
+    
 
     
     
