@@ -31,8 +31,8 @@ public class DsiCU23 {
         Estado estado4 = new Estado("Baja Tecnica","","",true,false);
         Estado estado5 = new Estado("Baja Definitiva","","",true,false);
         
-        Date desde = new Date();
-        Date hasta = new Date();
+        Date desde = new Date(122,6,22,0,0);
+        Date hasta = new Date(122,6,30,0,0);
         
         
         CambioEstadoRT cambioE1 = new CambioEstadoRT(desde,hasta,estado1);
@@ -96,21 +96,68 @@ public class DsiCU23 {
         rec.add(e);
         rec.add(f);
         
+        ArrayList <AsignacionCientificoDelCI> asignaciones = new ArrayList <>();
+        
+        PersonalCientifico cientifico1 = new PersonalCientifico(1,null,null,null,"juan@gmail.com",null,null);
+        AsignacionCientificoDelCI asignacion1 = new AsignacionCientificoDelCI(null,null,cientifico1);
+        
+         asignaciones.add(asignacion1);       
         
         
+        centro.setAsignacionCientifico(asignaciones);
         
-        PersonalCientifico cientifico1 = new PersonalCientifico(1,null,null,null,null,null,null);
+        
         PersonalCientifico cientifico2 = new PersonalCientifico(2,null,null,null,null,null,null);
         PersonalCientifico cientifico3 = new PersonalCientifico(3,null,null,null,null,null,null);
         PersonalCientifico cientifico4 = new PersonalCientifico(4,null,null,null,null,null,null);
         
-        Turno turno1 = new Turno(null,null,null,null,null);
-        Turno turno2 = new Turno(null,null,null,null,null);
-        Turno turno3 = new Turno(null,null,null,null,null);
-        Turno turno4 = new Turno(null,null,null,null,null);
-        Turno turno5 = new Turno(null,null,null,null,null);
         
+       ArrayList <Turno> turnos = new ArrayList <>();
+       ArrayList <CambioEstadoTurno> cambioEstadoturnos = new ArrayList <>();
+       ArrayList <CambioEstadoTurno> cambioEstadoturnos2 = new ArrayList <>();
+       ArrayList <CambioEstadoTurno> cambioEstadoturnos3 = new ArrayList <>();
+       
+       
+       Estado estado6 = new Estado("Disponible","","Recurso Tecnologico",true,false);
+       Estado estado7 = new Estado("Pendiente Confirmacion","","Recurso Tecnologico",true,false);
+       Estado estado8 = new Estado("Reservado","","Recurso Tecnologico",true,false);
+       
+       CambioEstadoTurno cambioturno1 = new CambioEstadoTurno(desde,hasta,estado6);
+       CambioEstadoTurno cambioturno2 = new CambioEstadoTurno(desde,hasta,estado7);
+       CambioEstadoTurno cambioturno3 = new CambioEstadoTurno(desde,hasta,estado8);
+       
+       cambioEstadoturnos.add(cambioturno1);
+       cambioEstadoturnos2.add(cambioturno2);
+       cambioEstadoturnos3.add(cambioturno3);
+       
+       
+       
+       
+       Date horajunio1ini = new Date(122,6,28,10,0,0); /*disponible 1 julio*/
+       Date horajunio2ini = new Date(122,6,30,14,0,0); 
+       Date horajunio3ini = new Date(122,6,29,15,0,0); 
+       
+       Date horajunio1fin = new Date(122,7,2,10,0,0); /*disponible 1 julio*/
+       Date horajunio2fin = new Date(122,7,8,14,0,0); 
+       Date horajunio3fin = new Date(122,7,15,15,0,0); 
+       
+       
+       Turno turno1 = new Turno(null,null,horajunio1ini,horajunio1fin,null);
+       Turno turno2 = new Turno(null,null,horajunio2ini,horajunio2fin,null);
+       Turno turno3 = new Turno(null,null,horajunio3ini,horajunio3fin,null);
+       Turno turno4 = new Turno(null,null,null,null,null);
+       Turno turno5 = new Turno(null,null,null,null,null);
         
+       turno1.setCambioEstadoTurno(cambioEstadoturnos);
+       turno2.setCambioEstadoTurno(cambioEstadoturnos2);
+       turno3.setCambioEstadoTurno(cambioEstadoturnos3);
+       
+       /*Los recursos tecnologicos del recurso a*/
+       turnos.add(turno1);
+       turnos.add(turno2);
+       turnos.add(turno3);
+       
+       a.setTurnos(turnos);
         
         
         
@@ -183,17 +230,28 @@ public class DsiCU23 {
             pantalla.mostrarRTAgrupados(recursosAll);
             
             /*RECURSO SELECCIONADO POR EL USUARIO*/
-            System.out.print(pantalla.getRecursoSeleccionado().toString());
+            
+            gestor.setRecursoTecnologicoSeleccionado(pantalla.getRecursoSeleccionado());
+            gestor.setUsuarioLogueado(cientifico1);
+            boolean estaLogueado = gestor.buscarUsuarioLogueado(cientifico1);
+            String correoInstitucionalCientifico = gestor.verificarCIDeCientifico(cientifico1);
             
             
             
-           // int usuario = gestor.buscarUsuarioLogueado();
-            /*ya no entiendo como hacer esto*/
-            //gestor.verificarCIDeCientifico(usuario);
+            System.out.print("---" + correoInstitucionalCientifico+"-----");
+            
             
             /*Obtiene la hora actual del sistema*/
-            String horaActual = gestor.obtenerFechaYHoraActual();
+            Date horaActual = gestor.obtenerFechaYHoraActual();
             System.out.print(horaActual);
+            
+            gestor.setFechaActual(horaActual);
+            /*TURNOS*/
+            gestor.obtenerTurnosDelRTSeleccionado();
+            
+            /*YA TENGO LOS TURNOS*/
+            
+            pantalla.mostrarTurnos(gestor.getTurnoDelRT());
             
             
             

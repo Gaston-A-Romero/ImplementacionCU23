@@ -214,6 +214,18 @@ public class CentroDeInvestigacion {
        }
        return false;
    }
+   public String MisCientificosActivos(PersonalCientifico a){
+       for(int i = 0;i<this.asignacionCientifico.size();i++){
+           if(this.asignacionCientifico.get(i).getPersonalCientifico().equals(a)){
+               return this.asignacionCientifico.get(i).esCientificoActivo();
+           
+           }
+           
+       }
+       return "cientifico no encontrado";
+       
+       
+   }
     
 
     

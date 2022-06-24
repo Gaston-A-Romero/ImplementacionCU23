@@ -1,6 +1,7 @@
 
 package com.yoprogramo.dsicu23;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -10,23 +11,23 @@ public class Turno {
     private Date fechaHoraInicio;
     private Date fechaHoraFin;
     
-    private CambioEstadoTurno[] cambioEstadoTurno;  /* Relacion a cambio de estados*/
+    
+    private ArrayList <CambioEstadoTurno> cambioEstadoTurno;  /* Relacion a cambio de estados*/
     
     
     
     
     /*Contructor*/
-    public Turno(Date fechaGeneracion, String diaSemana, Date fechaHoraInicio, Date fechaHoraFin, CambioEstadoTurno[] cambioEstadoTurno) {
+
+    public Turno(Date fechaGeneracion, String diaSemana, Date fechaHoraInicio, Date fechaHoraFin, ArrayList<CambioEstadoTurno> cambioEstadoTurno) {
         this.fechaGeneracion = fechaGeneracion;
         this.diaSemana = diaSemana;
         this.fechaHoraInicio = fechaHoraInicio;
         this.fechaHoraFin = fechaHoraFin;
         this.cambioEstadoTurno = cambioEstadoTurno;
     }
-    
-    
-    /*Metodos*/
 
+    /*Metodos*/
     public Date getFechaGeneracion() {
         return fechaGeneracion;
     }
@@ -59,12 +60,32 @@ public class Turno {
         this.fechaHoraFin = fechaHoraFin;
     }
 
-    public CambioEstadoTurno[] getCambioEstadoTurno() {
+    public ArrayList<CambioEstadoTurno> getCambioEstadoTurno() {
         return cambioEstadoTurno;
     }
 
-    public void setCambioEstadoTurno(CambioEstadoTurno[] cambioEstadoTurno) {
+    public void setCambioEstadoTurno(ArrayList<CambioEstadoTurno> cambioEstadoTurno) {
         this.cambioEstadoTurno = cambioEstadoTurno;
     }
+    /*PREGUNTA SI LA HORA QUE SE LE PASA POR PARAMETRO ES MENOR A LA HORA DE INICIO DEL TURNO*/
+    public boolean esDesdeHoraFechaYHoraActual(Date fechaActual) {
+        return this.fechaHoraInicio.after(fechaActual);
+    }
+
+    public Turno mostrarTurno(Turno t) {
+        for (int i = 0; i< this.cambioEstadoTurno.size();i++){
+            this.cambioEstadoTurno.get(i).esUltimoCambioEstadoTurno();
+            
+            
+        
+        }
+        return this;
+    }
+    
+
+    
+
+    
+    
     
 }

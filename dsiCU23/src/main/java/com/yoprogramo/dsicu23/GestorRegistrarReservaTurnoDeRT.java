@@ -14,7 +14,7 @@ public class GestorRegistrarReservaTurnoDeRT {
     private RecursoTecnologico recursoTecnologicoSeleccionado;
     private PersonalCientifico usuarioLogueado;
     private Date fechaActual; /*Te da tanto la fecha como la hora, no se si usar otro atributo mas*/
-    private Turno[] turnoDelRT;
+    private ArrayList<Turno> turnoDelRT;
     private Turno turnoSeleccionado;
     private boolean esReservado;
     private String notificacionMail;
@@ -82,14 +82,13 @@ public class GestorRegistrarReservaTurnoDeRT {
         this.fechaActual = fechaActual;
     }
 
-    public Turno[] getTurnoDelRT() {
+    public ArrayList<Turno> getTurnoDelRT() {
         return turnoDelRT;
     }
 
-    public void setTurnoDelRT(Turno[] turnoDelRT) {
+    public void setTurnoDelRT(ArrayList<Turno> turnoDelRT) {
         this.turnoDelRT = turnoDelRT;
     }
-
     public Turno getTurnoSeleccionado() {
         return turnoSeleccionado;
     }
@@ -177,26 +176,28 @@ public class GestorRegistrarReservaTurnoDeRT {
         return recursosDatos;
         
     }
-    
-    /*CON LA DEPENDENCIA ME IMAGINO QUE AL TENER EL NOMBRE DEL CENTRO PODES OBTENER EL ARRAY LIST DE LOS RECURSOS Y LO RECORRES CON EL TIPO PARA QUE SIGAN SIENDO LOS DE ANTES*/
+    /*Busca al usuario y obtiene su legajo, esto no creo q este bien u hay que ver como se implementa lo de la sesion, capaz puede pedir el legajo o algo en la interfaz*/
+    public boolean buscarUsuarioLogueado(PersonalCientifico a) {
+        if(this.usuarioLogueado.getLegajo().equals(a.getLegajo())){            
+            return true;
+        }
+        return false;
+    }
+    /*Lo hace la pantalla*/
     public void agruparRTPorCI() {
         
     }
-    /*Busca al usuario y obtiene su legajo, esto no creo q este bien u hay que ver como se implementa lo de la sesion, capaz puede pedir el legajo o algo en la interfaz*/
-    public int buscarUsuarioLogueado() {        
-        return this.usuarioLogueado.getLegajo();
-        
+    
+    
+
+    public String verificarCIDeCientifico(PersonalCientifico a) {
+        String correo = this.recursoTecnologicoSeleccionado.getCentro().MisCientificosActivos(a);
+        return correo;
     }
 
-    public void verificarCIDeCientifico(int usuario) {
-        
-        
-    }
-
-    public String obtenerFechaYHoraActual() {
-        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
-        Date date = new Date(System.currentTimeMillis());
-        return formatter.format(date);
+    public Date obtenerFechaYHoraActual() {
+        Date horaActual = new Date(122,6,25,0,0);
+        return horaActual;
         
     }
 
@@ -208,6 +209,15 @@ public class GestorRegistrarReservaTurnoDeRT {
     private void buscarEstadoReservado(String ambito) {
         /*Recorrer la clase estado con todos y preguntar si el string ambito es igual a el atributo ambito*/
     }
+    /*TRAE LOS TURNOS PARA EL RECURSO SELECCIONADO*/
+    public ArrayList<Turno> obtenerTurnosDelRTSeleccionado() {
+        
+        this.turnoDelRT = this.recursoTecnologicoSeleccionado.buscarTurnosDesdeFechaYHoraActual(this.fechaActual);
+        return this.turnoDelRT;
+        
+        
+    }
+    
 
     
 

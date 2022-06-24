@@ -16,7 +16,7 @@ public class RecursoTecnologico {
     private Modelo modelo;              /*Referencias a la clases del modelo de analisis*/
     private TipoRecursoTecnologico tipoRecurso;
     private CambioEstadoRT cambioEstado;
-    private Turno[] turnos;
+    private ArrayList<Turno> turnos;
     private CentroDeInvestigacion centro;
     
     
@@ -24,7 +24,7 @@ public class RecursoTecnologico {
     
     
     /*Constructor*/
-    public RecursoTecnologico(Integer numeroRT, Date fechaAlta, String imagenes, Date perioricidadMantenimientoPrev, Integer duracionMantenimientoPrev, String fraccionHorarioTurnos, Modelo modelo, TipoRecursoTecnologico tipoRecurso, CambioEstadoRT cambioEstado, Turno[] turnos, CentroDeInvestigacion centro) {    
+    public RecursoTecnologico(Integer numeroRT, Date fechaAlta, String imagenes, Date perioricidadMantenimientoPrev, Integer duracionMantenimientoPrev, String fraccionHorarioTurnos, Modelo modelo, TipoRecursoTecnologico tipoRecurso, CambioEstadoRT cambioEstado, ArrayList<Turno> turnos, CentroDeInvestigacion centro) {    
         this.numeroRT = numeroRT;
         this.fechaAlta = fechaAlta;
         this.imagenes = imagenes;
@@ -111,13 +111,13 @@ public class RecursoTecnologico {
         this.cambioEstado = cambioEstado;
     }
 
-    public Turno[] getTurnos() {
+    public ArrayList<Turno> getTurnos() {
         return turnos;
     }
 
-    public void setTurnos(Turno[] turnos) {
+    public void setTurnos(ArrayList<Turno> turnos) {
         this.turnos = turnos;
-    }
+    }   
 
     public CentroDeInvestigacion getCentro() {
         return centro;
@@ -163,18 +163,7 @@ public class RecursoTecnologico {
         
         
     }
-    /*Me da problema el tema de obtener los dos datos y devolverlos si estoy devolviendo un recurso tecnologico*/
-    /*
-    public ArrayList<String> miModeloYMarca() {
-        ArrayList<String> modeloYmarca = new ArrayList<>();
-        modeloYmarca.add(this.modelo.getNombre());
-        modeloYmarca.add(this.modelo.conocerMarca());
-        return modeloYmarca;
-        
-        
-        
-    }
-    */
+    
     /*OTRA DEPENDENCIA PARA IMPLEMENTAR pero lo hago sin por ahora*/
     private void conocerCentroDeInvestigacion() {
         
@@ -183,6 +172,19 @@ public class RecursoTecnologico {
     public String toString(){
         return "Numero: "+this.getNumeroRT() + "-" +"Modelo: "+ this.getModelo().getNombre()+"--"+"Marca: "+ this.getModelo().conocerMarca()+"--"+"Estado: "+this.getCambioEstado().esUltimoCambioEstadoRT();
         
+    }
+
+    ArrayList<Turno> buscarTurnosDesdeFechaYHoraActual(Date fechaActual) {
+        ArrayList<Turno> turnoRecurso = new ArrayList<>();
+        for(int i =0; i< this.turnos.size();i++){
+            if(this.turnos.get(i).esDesdeHoraFechaYHoraActual(fechaActual)){
+                Turno a = this.turnos.get(i).mostrarTurno(this.turnos.get(i));
+                
+                turnoRecurso.add(a);
+            
+            }
+        }
+        return turnoRecurso;
     }
 
     

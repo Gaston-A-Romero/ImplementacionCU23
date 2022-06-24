@@ -10,6 +10,12 @@ public class AsignacionCientificoDelCI {
     private PersonalCientifico personalCientifico;
     
      /* Constructor de la clase */
+
+    public AsignacionCientificoDelCI(Date fechaDesde, Date fechaHasta, PersonalCientifico personalCientifico) {
+        this.fechaDesde = fechaDesde;
+        this.fechaHasta = fechaHasta;
+        this.personalCientifico = personalCientifico;
+    }
     
     
     
@@ -27,11 +33,26 @@ public class AsignacionCientificoDelCI {
         return fechaHasta;
     }
 
+    public PersonalCientifico getPersonalCientifico() {
+        return personalCientifico;
+    }
+
+    public void setPersonalCientifico(PersonalCientifico personalCientifico) {
+        this.personalCientifico = personalCientifico;
+    }
+    
+
     public void setFechaHasta(Date fechaHasta) {
         this.fechaHasta = fechaHasta;
     }
-    public boolean esCientificoActivo(){
-        return true;
+    /*Verifica que el cientifico siga en el centro ya que no tiene una fecha hasta*/
+    public String esCientificoActivo(){
+        if(this.getFechaHasta() == null){
+            String correo = this.personalCientifico.getCorreoElectronicoInstitucional();
+            return correo;
+        }
+        return null;
+        
         
     }
     
